@@ -83,10 +83,10 @@
 
           installPhase = ''
             mkdir -p $out/bin
-            cp main.py $out/bin/mv-mcp
-            chmod +x $out/bin/mv-mcp
+            cp main.py $out/bin/mv-mcp-script
+            chmod +x $out/bin/mv-mcp-script
             makeWrapper ${appEnv}/bin/python $out/bin/mv-mcp \
-              --add-flags "$out/bin/mv-mcp"
+              --add-flags "$out/bin/mv-mcp-script"
           '';
 
           meta = {

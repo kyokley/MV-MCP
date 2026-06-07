@@ -10,5 +10,5 @@ def main():
 
 
 if __name__ == "__main__":
-    mcp.run()
-    # mcp.run(transport="http", port=8089)
+    # mcp.run()
+    mcp.run(transport="http", port=8089)
