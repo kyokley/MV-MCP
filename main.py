@@ -4,9 +4,11 @@ from fastmcp import FastMCP
 mcp = FastMCP("MediaViewer MCP")
 
 
+@mcp.tool
 def main():
-    print("Hello from mv-mcp!")
+    return "Hello from mv-mcp!"
 
 
 if __name__ == "__main__":
-    mcp.run(transport="http", port=8089)
+    mcp.run()
+    # mcp.run(transport="http", port=8089)
