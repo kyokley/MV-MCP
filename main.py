@@ -24,6 +24,33 @@ def tv_shows():
 
 
 @mcp.tool
+def tv_shows_by_imdb(imdb_id: str):
+    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/tv-imdb/',
+                     params={'imdb_id': imdb_id},
+                     headers=HEADERS)
+    resp.raise_for_status()
+    return resp.json()
+
+
+@mcp.tool
+def tv_shows_by_genre(genre: str):
+    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/tv-genre/',
+                     params={'genre': genre},
+                     headers=HEADERS)
+    resp.raise_for_status()
+    return resp.json()
+
+
+@mcp.tool
+def genres():
+    """Get all genres from MediaViewer"""
+    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/genre/',
+                     headers=HEADERS)
+    resp.raise_for_status()
+    return resp.json()
+
+
+@mcp.tool
 def movies():
     resp = httpx.get(f'{MV_HOST}/mediaviewer/api/movies/',
                      headers=HEADERS)
