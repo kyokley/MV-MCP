@@ -43,6 +43,7 @@ def tv_shows_by_genre(genre: str):
 
 @mcp.tool
 def media_files_for_tv(tv_id: str):
+    """Get all episodes for a given tv show"""
     resp = httpx.get(f'{MV_HOST}/mediaviewer/api/mcp-mediafile/',
                      params={'tv_id': tv_id},
                      headers=HEADERS)
