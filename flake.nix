@@ -100,6 +100,24 @@
           type = "app";
           program = "${self.packages.${system}.default}/bin/mv-mcp";
         };
+
+        # Docker image wrapping the MCP server
+        # Build: nix build .#docker
+        # Load:  docker load < result
+        # Run:   docker run -e MV_MCP_API_KEY=... -e MV_HOST=... -p 8089:8089 mv-mcp:latest
+        packages.docker = pkgs.dockerTools.buildLayeredImage {
+          name = "kyokley/mv-mcp";
+          tag = "latest";
+          contents = [ self.packages.${system}.default ];
+          config = {
+            Cmd = [ "${self.packages.${system}.default}/bin/mv-mcp" ];
+            ExposedPorts = { "8089/tcp" = { }; };
+            Env = [
+              "MV_MCP_API_KEY="
+              "MV_HOST="
+            ];
+          };
+        };
       }
     );
 }
