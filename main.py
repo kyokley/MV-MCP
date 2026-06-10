@@ -51,6 +51,15 @@ def genres():
 
 
 @mcp.tool
+def play_link():
+    """Get all genres from MediaViewer"""
+    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/genre/',
+                     headers=HEADERS)
+    resp.raise_for_status()
+    return resp.json()
+
+
+@mcp.tool
 def movies():
     resp = httpx.get(f'{MV_HOST}/mediaviewer/api/movies/',
                      headers=HEADERS)
