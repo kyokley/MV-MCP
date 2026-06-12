@@ -14,34 +14,17 @@ mcp = FastMCP("MediaViewer MCP")
 def tv_shows(name: str = '',
             imdb: str = '',
             tmdb: str = '',
+             genre: str = '',
              ):
-    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/tv/',
+    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/mcp-tv/',
                     params={'name': name,
                             'imdb': imdb,
                             'tmdb': tmdb,
+                            'genre': genre,
                              },
                      headers=HEADERS)
     resp.raise_for_status()
     return resp.json()
-
-
-@mcp.tool
-def tv_shows_by_imdb(imdb_id: str):
-    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/tv-imdb/',
-                     params={'imdb_id': imdb_id},
-                     headers=HEADERS)
-    resp.raise_for_status()
-    return resp.json()
-
-
-@mcp.tool
-def tv_shows_by_genre(genre: str):
-    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/tv-genre/',
-                     params={'genre': genre},
-                     headers=HEADERS)
-    resp.raise_for_status()
-    return resp.json()
-
 
 @mcp.tool
 def media_files_for_tv(tv_id: str):
@@ -94,7 +77,7 @@ def genres():
 @mcp.tool
 def play_link(mf_id: str):
     """
-    Get the play link for the currently playing media file
+    Get a play link for a given media file ID.
 
     Args:
         mf_id: The ID of the media file.
@@ -106,8 +89,31 @@ def play_link(mf_id: str):
 
 
 @mcp.tool
-def movies():
-    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/movies/',
+def movie_play_link(movie_id: str):
+    """
+    Get a play link for a given media file ID.
+
+    Args:
+        mf_id: The ID of the media file.
+    """
+    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/mcp-movie-autoplay/{movie_id}/',
+                     headers=HEADERS)
+    resp.raise_for_status()
+    return resp.json()
+
+
+@mcp.tool
+def movies(name: str = '',
+        imdb: str = '',
+        tmdb: str = '',
+           genre: str = '',
+        ):
+    resp = httpx.get(f'{MV_HOST}/mediaviewer/api/mcp-movie/',
+                    params={'name': name,
+                            'imdb': imdb,
+                            'tmdb': tmdb,
+                            'genre': genre,
+                             },
                      headers=HEADERS)
     resp.raise_for_status()
     return resp.json()
