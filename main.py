@@ -4,7 +4,10 @@ from fastmcp import FastMCP
 
 
 API_KEY = os.environ["MV_MCP_API_KEY"].strip()
-MV_HOST = os.environ["MV_HOST"].strip()
+MV_HOST = os.environ["MV_MCP_MV_HOST"].strip()
+LISTEN_HOST = os.environ.get("MV_MCP_LISTEN_HOST", "127.0.0.1").strip()
+LISTEN_PORT = int(os.environ.get("MV_MCP_LISTEN_PORT", "8089").strip())
+
 HEADERS = {'API-KEY': API_KEY}
 
 mcp = FastMCP("MediaViewer MCP")
@@ -121,4 +124,6 @@ def movies(name: str = '',
 
 if __name__ == "__main__":
     # mcp.run()
-    mcp.run(transport="http", port=8089)
+    mcp.run(transport="http",
+            host=LISTEN_HOST,
+            port=LISTEN_PORT,)

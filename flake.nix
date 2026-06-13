@@ -114,7 +114,9 @@
             ExposedPorts = { "8089/tcp" = { }; };
             Env = [
               "MV_MCP_API_KEY="
-              "MV_HOST="
+              "MV_MCP_MV_HOST="
+              "MV_MCP_LISTEN_HOST="
+              "MV_MCP_LISTEN_PORT="
             ];
           };
         };

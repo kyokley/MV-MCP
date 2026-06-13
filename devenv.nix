@@ -5,7 +5,7 @@
   # env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = [ pkgs.git ];
+  packages = [];
 
   # https://devenv.sh/languages/
   languages.python = {
@@ -24,11 +24,21 @@
   # services.postgres.enable = true;
 
   # https://devenv.sh/scripts/
-  scripts.hello.exec = ''
-    echo Welcom to
-    echo Mediaviewer | ${pkgs.figlet}/bin/figlet -f slant | ${pkgs.lolcat}/bin/lolcat
-    echo MCP | ${pkgs.figlet}/bin/figlet -f slant | ${pkgs.lolcat}/bin/lolcat
-  '';
+  scripts = {
+    hello.exec = ''
+      echo Welcome to
+      echo Mediaviewer | ${pkgs.figlet}/bin/figlet -f slant | ${pkgs.lolcat}/bin/lolcat
+      echo MCP | ${pkgs.figlet}/bin/figlet -f slant | ${pkgs.lolcat}/bin/lolcat
+    '';
+    build.exec = ''
+      nix build .#docker
+      ${pkgs.docker}/bin/docker load < result
+    '';
+    publish.exec = ''
+      build
+      ${pkgs.docker}/bin/docker push kyokley/mv-mcp
+    '';
+  };
 
   # https://devenv.sh/basics/
   enterShell = ''
@@ -44,7 +54,6 @@
   # https://devenv.sh/tests/
   enterTest = ''
     echo "Running tests"
-    git --version | grep --color=auto "${pkgs.git.version}"
   '';
 
   # https://devenv.sh/git-hooks/
