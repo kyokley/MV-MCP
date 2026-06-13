@@ -31,4 +31,6 @@ jobs:
       - name: Load
         run: docker load < result
       - name: Publish
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
         run: docker push $DOCKER_USER/mv-mcp
