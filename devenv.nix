@@ -1,6 +1,11 @@
 { pkgs, lib, config, inputs, ... }:
 
 {
+  dotenv = {
+    enable = false;
+    disableHint = true;
+  };
+
   # https://devenv.sh/basics/
   # env.GREET = "devenv";
 
@@ -29,6 +34,9 @@
       echo Welcome to
       echo Mediaviewer | ${pkgs.figlet}/bin/figlet -f slant | ${pkgs.lolcat}/bin/lolcat
       echo MCP | ${pkgs.figlet}/bin/figlet -f slant | ${pkgs.lolcat}/bin/lolcat
+    '';
+    run.exec = ''
+      secretspec run -- nix run .
     '';
     build.exec = ''
       nix build .#docker

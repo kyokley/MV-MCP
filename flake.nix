@@ -70,6 +70,7 @@
           packages = [
             appEnv
             pkgs.uv
+            pkgs.secretspec
           ];
         };
 
